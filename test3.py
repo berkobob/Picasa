@@ -20,7 +20,8 @@ root.title("Picasa")
 
 tree = ttk.Treeview(root)
 right = tk.Frame(root)
-photoFrame = tk.Canvas(right, scrollregion=(0,0,500,500))
+photoFrame = tk.Canvas(right, scrollregion=(0, 0, 500, 500))
+test = ttk.ScrolledFrame() 
 
 photos = []
 thumbnails = []
@@ -47,11 +48,11 @@ for photo in photos:
             col += 1
 
 vbar = tk.Scrollbar(right, orient=tk.VERTICAL)
-vbar.pack(side=tk.RIGHT,fill='y')
+vbar.pack(side=tk.RIGHT, fill='y')
 vbar.config(command=photoFrame.yview)
 photoFrame.config(yscrollcommand=vbar.set)
 photoFrame.config(width=300, height=300)
-photoFrame.pack(side=tk.LEFT,expand='true', fill=tk.BOTH)
+photoFrame.pack(side=tk.LEFT, expand='true', fill=tk.BOTH)
 
 
 tree.pack(fill='both', expand='True', side='left')

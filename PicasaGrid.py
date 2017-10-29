@@ -43,7 +43,7 @@ for dirName, subDirList, fileList in os.walk(rootDir):
         except:
             pass
 
-s=ttk.Scrollbar(self, orient=VERTICAL, command=listbox.yview)
-listbox.configure(yscrollcommand-s.set)
+#s=ttk.Scrollbar(self, orient=VERTICAL, command=listbox.yview)
+#listbox.configure(yscrollcommand-s.set)
 tree.grid(column=0)
 root.mainloop()
