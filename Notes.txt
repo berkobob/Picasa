@@ -1,0 +1,74 @@
+1. Show all folders that contain pictures on the left in a tree
+2. Show all the pictures in folder sequence on the right
+3. Allow right pane to scroll from anywhere
+4. Double click on a photo to enlarge to full size
+
+I'm thinking of having four classes:
+    1. The folder tree
+    2. Scrolling through pictures
+    3. The Menu bar
+    4. Status bar
+
+#This is what this does
+import tkinter as tk
+import os
+from PIL import Image, ImageTk
+from tkinter import ttk
+from ScrollableFrame import *
+from menu import createmenu
+
+rootDir = "./Pics"
+root = tk.Tk()
+root.title("Picasa")
+#root.attributes("-fullscreen", True)
+root.state("zoomed")
+
+#('winnative', 'clam', 'alt', 'default', 'classic', 'vista', 'xpnative')
+ttk.Style().theme_use('alt')
+
+createmenu(root)
+
+tree = ttk.Treeview(root)
+swidth = (root.winfo_screenwidth())
+sheight = root.winfo_screenheight()
+frame = ttk.Frame(root)
+picFrame = ScrollableGridFrame(frame)
+
+root.columnconfigure(0, weight=1)
+root.columnconfigure(1, weight=10)
+root.rowconfigure(0, weight=1)
+frame.columnconfigure(0, weight=1)
+frame.rowconfigure(0, weight=1)
+
+photos=[]
+size=300,300
+
+row = 0
+col = 1
+
+for dirName, subDirList, fileList in os.walk(rootDir):
+    tree.insert('', 'end', dirName, text=dirName)
+    for fileName in fileList:
+        f=os.path.join(dirName,fileName)
+        try:
+            tree.insert(dirName, 'end', fileName,text=fileName)
+            p = Image.open(f)
+            p.thumbnail(size)
+            pic = ImageTk.PhotoImage(p)
+            photos.append(pic)
+            tk.Label(picFrame.frame, image=pic).grid(row=row, column=col)
+            if col % 3 == 0:
+                row+=1
+                col=1
+            else:
+                col += 1
+        except:
+            pass
+
+tree.grid(column=0, sticky='nsew')
+picFrame.grid(sticky='nsew')
+frame.grid(row=0, column=1, sticky='nsew')
+#frame.pack(fill=tk.BOTH, expand=True)
+
+root.mainloop()
+

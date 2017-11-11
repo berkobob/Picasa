@@ -1,7 +1,12 @@
+"""
+menubar for Picasa
+"""
+
 import tkinter as tk
 from tkinter import messagebox
 
 def quit_app(root):
+    """ exit Picasa """
     root.quit()
 
 def show_about(event=None):
@@ -11,15 +16,16 @@ def show_msg(text):
     messagebox.showinfo("You pressed", text)
     print(text+" pressed")
 
-def createmenu(root, func):
+def createmenu(root, controller):
     root=root
     menu = tk.Menu(root)
+    controller = controller
 
     file_menu = tk.Menu(menu, tearoff=0)
 
-    file_menu.add_command(label="Open", command=lambda: func(221))
-    file_menu.add_command(label="Save",command=lambda: show_msg("Save"))
-    file_menu.add_command(label="Load",command=lambda: show_msg("Load"))
+    file_menu.add_command(label="Watch folder", command=lambda: controller("Import"))
+    file_menu.add_command(label="Save",command=lambda: controller("Save"))
+    file_menu.add_command(label="Load",command=lambda: controller("Load"))
     file_menu.add_separator()
     file_menu.add_command(label="Quit", command=lambda: quit_app(root))
     menu.add_cascade(label="File", menu=file_menu)
@@ -44,5 +50,5 @@ def createmenu(root, func):
 
 if __name__ == '__main__':
     root = tk.Tk()
-    createmenu(root)
+    createmenu(root, None)
     root.mainloop()
