@@ -25,7 +25,6 @@ class Album():
     def __folders__(self):
         for pic in self.album:
             self.folders.add(pic['folder'])
-        print(self.folders)
 
     def getalbum(self):
         return self.album
