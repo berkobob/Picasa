@@ -3,30 +3,26 @@ Create a class for the Tree structure that represents the folders that contain
 photos.
 """
 import tkinter as tk
+from view.Myframe import MyFrame
 
-class Tree(tk.Frame):
-    """ create tree structure """
-    def __init__(self, frame=None):
-        tk.Frame.__init__(self, frame)
+class Tree(MyFrame):
+    """ create tree structure using scrollable frame """
+    def __init__(self, root=None):
+        MyFrame.__init__(self, root)
+        self.frame = super().get()
 
-    def createtree(self):
-        """ build the tree from available info """
-        tk.Label(self, text="Tree").pack()
+    def createtree(self, controller):
+        self.controller = controller
         return self
 
     def build(self, folders):
-        """ rebuild the tree structure """
-        for widget in self.winfo_children():
-            widget.destroy()
-        row = 0
+        i=0
         for folder in folders:
-            print(folder)
-            tk.Label(self, text=folder).pack()
-            row+=1
-
+            tk.Button(super().get(), text=folder, relief='flat').grid(row=i, sticky='w')
+            i+=1
 
 if __name__ == '__main__':
     root = tk.Tk()
     tree = Tree(root)
-    tree.createtree().pack()
+    #tree.createtree().pack()
     root.mainloop()

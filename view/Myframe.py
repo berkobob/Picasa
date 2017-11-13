@@ -20,11 +20,16 @@ class MyFrame(tk.Frame):
         self.canvas.bind_all("<MouseWheel>", self._on_mousewheel)
 
     def onFrameConfigure(self, event):
+        """ resize scrollable area """
         self.frame.update_idletasks()
         self.canvas.configure(scrollregion=self.canvas.bbox('all'))
 
     def _on_mousewheel(self, event):
         self.canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+
+    def get(self):
+        """ return frame so that child can add widgets """
+        return self.frame
 
 if __name__ == '__main__':
     root = tk.Tk()

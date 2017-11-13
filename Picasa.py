@@ -13,7 +13,7 @@ from menu import createmenu
 from view.Tree import Tree
 from view.Gallery import Gallery
 from view.Status import Status
-from data.albumdata import Album
+from data.Album import Album
 from PIL import Image, ImageTk
 
 def newfolder():
@@ -49,12 +49,12 @@ if __name__ == '__main__':
     album = Album()
 
     root = Tk()
-    tree = Tree(root)
-    gallery = Gallery(root)
-    status = Status(root)
-
+    tree = Tree()
+    gallery = Gallery()
+    status = Status()
+ 
     createmenu(root, controller)
-    tree.createtree().grid(row=0, column=0)
+    tree.createtree(controller).grid(row=0, column=0, sticky=('nsw'))
     gallery.creategallery().grid(row=0, column=1, sticky=('nsew'))
     status.createsttatusbar().grid(row=1, column=0, columnspan=2, sticky=('ew'))
 

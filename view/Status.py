@@ -7,8 +7,8 @@ import tkinter as tk
 class Status(tk.Frame):
     
     """ Create a scroll bar """
-    def __init__(self, parent=None):
-        tk.Frame.__init__(self, parent)
+    def __init__(self):
+        tk.Frame.__init__(self)
         #self.status = tk.StringVar()
         #tk.Label(self, text=self.status).pack()
         self.status = tk.Label(self)

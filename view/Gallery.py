@@ -9,11 +9,12 @@ import tkinter as tk
 class Gallery(tk.Frame):
     """ Scroll dem pictures """
     def __init__(self, parent=None):
-        tk.Frame.__init__(self, parent)
+        tk.Frame.__init__(self)
 
     def creategallery(self):
         """ put some data in """
-        tk.Label(self, text="This is where the pictures will go").pack()
+        #tk.Label(self, text="This is where the pictures will go").pack()
+        tk.Button(self,text="My gallery", relief='flat').pack()
         return self
 
 if __name__ == '__main__':
