@@ -23,7 +23,7 @@ def createmenu(root, controller):
 
     file_menu = tk.Menu(menu, tearoff=0)
 
-    file_menu.add_command(label="Watch folder", command=lambda: controller("Import"))
+    file_menu.add_command(label="Watch", command=lambda: controller("newfolder"))
     file_menu.add_command(label="Save",command=lambda: controller("Save"))
     file_menu.add_command(label="Load",command=lambda: controller("Load"))
     file_menu.add_separator()

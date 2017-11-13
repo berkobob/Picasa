@@ -4,15 +4,26 @@ photos.
 """
 import tkinter as tk
 
-class Tree:
-    """create tree structure"""
-
-    def __init__(self, frame):
-        self.frame = frame
+class Tree(tk.Frame):
+    """ create tree structure """
+    def __init__(self, frame=None):
+        tk.Frame.__init__(self, frame)
 
     def createtree(self):
         """ build the tree from available info """
-        return tk.Label(self.frame, text="Tree")
+        tk.Label(self, text="Tree").pack()
+        return self
+
+    def build(self, folders):
+        """ rebuild the tree structure """
+        for widget in self.winfo_children():
+            widget.destroy()
+        row = 0
+        for folder in folders:
+            print(folder)
+            tk.Label(self, text=folder).pack()
+            row+=1
+
 
 if __name__ == '__main__':
     root = tk.Tk()

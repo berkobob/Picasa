@@ -5,6 +5,7 @@ to search photos for people and things
 
 Antoine Lever
 """
+import os
 
 from tkinter import Tk
 from tkinter import filedialog
@@ -12,18 +13,41 @@ from menu import createmenu
 from view.Tree import Tree
 from view.Gallery import Gallery
 from view.Status import Status
+from data.albumdata import Album
+from PIL import Image, ImageTk
 
 def newfolder():
     """ import all the files and folders in a directory """
-    print(filedialog.askdirectory())
+    for path, __, fileList in os.walk(filedialog.askdirectory()):
+        for fileName in fileList:
+            f = os.path.join(path, fileName)
+            try:
+                photo = Image.open(f)
+                photo.thumbnail((200, 200))
+                thumb = album.addthumb(ImageTk.PhotoImage(photo))
+                pic = {'file': fileName,
+                       'folder': path.split('\\')[-1],
+                       'thumb': thumb,
+                       'path': path
+                      }
+                album.addphoto(pic)
+            except Exception as e:
+                status.updatestatus(e)
+    album.save()
+    album.__folders__()
+    tree.build(album.folders)
+    root.update()
+
 
 def controller(stuff):
     """ process all view commands """
-    print(stuff)
-    if stuff == 'Import':
-        newfolder()
+    functions = {'newfolder': newfolder}
+    functions[stuff]()
+
 
 if __name__ == '__main__':
+    album = Album()
+
     root = Tk()
     tree = Tree(root)
     gallery = Gallery(root)
