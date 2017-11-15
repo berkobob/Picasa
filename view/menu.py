@@ -24,8 +24,8 @@ def createmenu(root, controller):
     file_menu = tk.Menu(menu, tearoff=0)
 
     file_menu.add_command(label="Watch", command=lambda: controller("newfolder"))
-    file_menu.add_command(label="Save",command=lambda: controller("Save"))
-    file_menu.add_command(label="Load",command=lambda: controller("Load"))
+    file_menu.add_command(label="Save",command=lambda: controller("save"))
+    file_menu.add_command(label="Load",command=lambda: controller("load"))
     file_menu.add_separator()
     file_menu.add_command(label="Quit", command=lambda: quit_app(root))
     menu.add_cascade(label="File", menu=file_menu)

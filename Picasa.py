@@ -5,20 +5,17 @@ to search photos for people and things
 
 Antoine Lever
 """
+#pylint: disable-msg=W0703
 import os
 
-from tkinter import Tk
-from tkinter import filedialog
-from menu import createmenu
-from view.Tree import Tree
-from view.Gallery import Gallery
-from view.Status import Status
 from data.Album import Album
+from view.Mainview import Mainview
 from PIL import Image, ImageTk
+
 
 def newfolder():
     """ import all the files and folders in a directory """
-    for path, __, fileList in os.walk(filedialog.askdirectory()):
+    for path, __, fileList in mview.getdir():
         for fileName in fileList:
             f = os.path.join(path, fileName)
             try:
@@ -32,30 +29,23 @@ def newfolder():
                       }
                 album.addphoto(pic)
             except Exception as e:
-                status.updatestatus(e)
+                mview.updatestatus(e)
     album.save()
     album.__folders__()
-    tree.build(album.folders)
-    root.update()
+    mview.buildtree(album.folders)
+    mview.update()
 
 
-def controller(stuff):
+def controller(action):
     """ process all view commands """
     functions = {'newfolder': newfolder}
-    functions[stuff]()
+    try:
+        functions[action]()
+    except Exception:
+        mview.updatestatus(action+" function not yet implemented")
 
 
 if __name__ == '__main__':
     album = Album()
-
-    root = Tk()
-    tree = Tree()
-    gallery = Gallery()
-    status = Status()
- 
-    createmenu(root, controller)
-    tree.createtree(controller).grid(row=0, column=0, sticky=('nsw'))
-    gallery.creategallery().grid(row=0, column=1, sticky=('nsew'))
-    status.createsttatusbar().grid(row=1, column=0, columnspan=2, sticky=('ew'))
-
-    root.mainloop()
+    mview = Mainview(controller)
+    mview.start()
