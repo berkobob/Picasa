@@ -4,22 +4,36 @@ Try and make panaronmic ones wider
 Try and make vids into gifs? 
 Separator between folders.
 """
+#pylint: disable-msg=W0621
 import tkinter as tk
+try:
+    from view.Myframe import MyFrame
+except:
+    from Myframe import MyFrame
 
-class Gallery(tk.Frame):
+class Gallery(MyFrame):
     """ Scroll dem pictures """
-    def __init__(self, parent=None):
-        tk.Frame.__init__(self)
+    def __init__(self, parent, controller):
+        MyFrame.__init__(self, parent)
+        self.controller = controller
+        self.columnconfigure(0, weight=5)
+        self.rowconfigure(0, weight=1)
 
-    def creategallery(self):
+    def build(self, pics=["No pictures to display"]):
         """ put some data in """
-        #tk.Label(self, text="This is where the pictures will go").pack()
-        tk.Button(self,text="My gallery", relief='flat').pack()
-        return self
+        i = 0
+        for pic in pics:
+            tk.Label(super().get(), text=pic).grid(row=i) 
+            i += 1
+
+def controller(text=None):
+    """ controller for testing """
+    print(text)
 
 if __name__ == '__main__':
     root = tk.Tk()
-    frame = Gallery(root)
-    frame.pack()
-    tk.Label(frame, text="Let's see if this works").pack()
+    frame = Gallery(root, controller)
+    frame.grid()
+    #frame.build(list(range(25)))
+    frame.build()
     root.mainloop()

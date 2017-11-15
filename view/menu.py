@@ -1,33 +1,21 @@
 """
 menubar for Picasa
 """
-
+#pylint: disable-msg=W0621
 import tkinter as tk
-from tkinter import messagebox
-
-def quit_app(root):
-    """ exit Picasa """
-    root.quit()
-
-def show_about(event=None):
-    messagebox.showwarning("About", "My attempt at Picasa")
-
-def show_msg(text):
-    messagebox.showinfo("You pressed", text)
-    print(text+" pressed")
 
 def createmenu(root, controller):
-    root=root
+    """ Build the main picasa menu """
     menu = tk.Menu(root)
-    controller = controller
 
     file_menu = tk.Menu(menu, tearoff=0)
 
-    file_menu.add_command(label="Watch", command=lambda: controller("newfolder"))
-    file_menu.add_command(label="Save",command=lambda: controller("save"))
-    file_menu.add_command(label="Load",command=lambda: controller("load"))
+    file_menu.add_command(label="Watch", accelerator='Alt-W',
+                          command=lambda: controller('menu', "newfolder"))
+    file_menu.add_command(label="Save", command=lambda: controller('menu', "save"))
+    file_menu.add_command(label="Load", command=lambda: controller('menu', "load"))
     file_menu.add_separator()
-    file_menu.add_command(label="Quit", command=lambda: quit_app(root))
+    file_menu.add_command(label="Quit", command=lambda: controller('menu', "quit"))
     menu.add_cascade(label="File", menu=file_menu)
 
     view_menu = tk.Menu(menu, tearoff=0)
@@ -38,17 +26,20 @@ def createmenu(root, controller):
     menu.add_cascade(label="View", menu=view_menu)
 
     help_menu = tk.Menu(menu, tearoff=0)
-    help_menu.add_command(label="About",    
-                    accelerator="Alt-A", 
-                    command=show_about)
+    help_menu.add_command(label="About",
+                          accelerator="Alt-A",
+                          command=lambda: controller('menu', 'about'))
     menu.add_cascade(label="Help", menu=help_menu)
-    root.bind('<Alt-A>', show_about)
-    root.bind('<Alt-a>', show_about)
-
+    root.bind('<Alt-A>', lambda: controller('menu', 'about'))
+    root.bind('<Alt-a>', lambda: controller('menu', 'about'))
 
     root.config(menu=menu)
 
+def controller(text):
+    """ controller for testing purposes only """
+    print(text)
+
 if __name__ == '__main__':
-    root = tk.Tk()
-    createmenu(root, None)
-    root.mainloop()
+    win = tk.Tk()
+    createmenu(win, controller)
+    win.mainloop()

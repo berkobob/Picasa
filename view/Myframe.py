@@ -7,14 +7,14 @@ class MyFrame(tk.Frame):
     def __init__(self, parent=None):
         tk.Frame.__init__(self, parent)
         self.canvas = tk.Canvas(self)
-        self.frame  = tk.Frame(self.canvas)
+        self.frame = tk.Frame(self.canvas)
         self.scroll = tk.Scrollbar(self, orient='vertical',
                                    command=self.canvas.yview)
         self.canvas.configure(yscrollcommand=self.scroll.set)
 
         self.scroll.grid(row=0, column=1, sticky='ns')
         self.canvas.grid(row=0, column=0, sticky='nsew')
-        self.canvas.create_window((0,0), window=self.frame, 
+        self.canvas.create_window((0, 0), window=self.frame,
                                   anchor='nw', tags='self')
         self.frame.bind("<Configure>", self.onFrameConfigure)
         self.canvas.bind_all("<MouseWheel>", self._on_mousewheel)

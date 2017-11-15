@@ -2,11 +2,11 @@
 import json
 
 class Album():
-    """ manage the Picasa meta classa """
+    """ manage the Picasa meta data """
     def __init__(self):
-        self.album = []
-        self.thumbs = []
-        self.folders = set()
+        self.album = []         # Photo meta data
+        self.thumbs = []        # Thumbnails of each photo
+        self.folders = set()    # A list of folders to monitor
 
     def addphoto(self, photo):
         """ add a photo to the album """
@@ -26,9 +26,10 @@ class Album():
         for pic in self.album:
             self.folders.add(pic['folder'])
 
-    def getalbum(self):
-        return self.album
-
-    def test(self):
-        for pic in self.album:
-            print(pic['folder'])
+if __name__ == '__main__':
+    print("Picasa database")
+    # Consider reading the JSON and dumping
+    with open('album', 'r') as f:
+        album = json.load(f)
+    print(album)
+        
